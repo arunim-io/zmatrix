@@ -1,5 +1,7 @@
 const std = @import("std");
 
+const build_zig_zon = @embedFile("build.zig.zon");
+
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
@@ -10,6 +12,13 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+
+    var options = std.Build.Step.Options.create(b);
+    options.addOption([]const u8, "contents", build_zig_zon);
+    exe.root_module.addOptions("build.zig.zon", options);
+
+    exe.linkSystemLibrary("ncurses");
+    exe.linkLibC();
 
     b.installArtifact(exe);
 
