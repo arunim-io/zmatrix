@@ -1,0 +1,7 @@
+[[tools.zig]]
+version = "0.15.2"
+backend = "core:zig"
+
+[[tools.zls]]
+version = "0.15.1"
+backend = "aqua:zigtools/zls"
